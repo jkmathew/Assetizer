@@ -1,8 +1,8 @@
 //
-//  CGFloatArgument.swift
+//  CGSizeArgument.swift
 //  AssetizerPackageDescription
 //
-//  Created by Johnykutty on 3/19/18.
+//  Created by Johnykutty on 3/20/18.
 //
 
 import Commander
