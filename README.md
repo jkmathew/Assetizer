@@ -18,4 +18,4 @@ This will create `image.imageset`, which can be directly copied to your `images.
 - [ ] Support for linux.
 
 ### Author
-
+Johnykutty - johnykutty.mathew@gmail.com
