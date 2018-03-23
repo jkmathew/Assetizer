@@ -30,8 +30,7 @@ class AssetWriter {
         self.imageURL = imageURL
         self.size = size.equalTo(CGSize.zero) ? image.size : size
         
-        let assetFolder = "\(imagePath.split(separator: "/").dropLast().joined(separator: "/"))/\(imageName).imageset"
-        self.assetURL = URL(fileURLWithPath: assetFolder)
+        self.assetURL = imageURL.deletingLastPathComponent().appendingPathComponent("\(imageName).imageset")
 
     }
     
