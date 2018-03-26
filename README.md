@@ -14,7 +14,7 @@ This will create `image.imageset`, which can be directly copied to your `images.
 ### TODO
 - [ ] Accept different device idioms.
 - [ ] Create app icons.
-- [ ] Distribute as a package to use in SPM projects.
+- [x] Distribute as a package to use in SPM projects.
 - [ ] Ditribute through home brew.
 - [ ] Support for linux.
 
