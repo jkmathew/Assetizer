@@ -7,13 +7,13 @@ let package = Package(
   name: "Assetizer",
   products: [
     .library(name: "Assetizer", targets: ["Assetizer"]),
-    .executable(name: "Run", targets: ["Run"]),
+    .executable(name: "assetize", targets: ["assetize"]),
   ],
   dependencies: [
     .package(url: "https://github.com/kylef/Commander.git", .upToNextMajor(from: "0.8.0")),
   ],
   targets: [
     .target(name: "Assetizer", dependencies: []),
-    .target(name: "Run", dependencies: ["Assetizer", "Commander"]),
+    .target(name: "assetize", dependencies: ["Assetizer", "Commander"]),
   ]
 )

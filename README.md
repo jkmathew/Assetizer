@@ -8,8 +8,8 @@ Adding images to iOS/macOS project is not straight forward. You should add `1x` 
 Clone/Download this repo
 ```shell
 cd /path/to/repo
-swift build
-./.build/x86_64-apple-macosx10.10/debug/Assetizer --input image.png --size 30x30
+make
+assetize image.png --size 30x30
 ```
 This will create `image.imageset`, which can  be directly used with your `images.xcassets`.
 

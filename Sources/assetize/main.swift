@@ -3,7 +3,8 @@ import Commander
 import Foundation
 
 command(
-  Option("input", default: "", flag: "i", description: "Input image file."),
+  Argument<String>("input", description: "Input image file."),
+//  Option("input", default: "", flag: "i", description: "Input image file."),
   Option("size", default: CGSize.zero, flag: "s", description: "Size of 1x image."),
   Option("output", default: "", flag: "o", description: "Output path."),
   Option("device", default: DeviceIdiom.universal, flag: "d", description: "Target device family.")
