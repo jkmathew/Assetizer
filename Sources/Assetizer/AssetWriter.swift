@@ -5,8 +5,8 @@
 //  Created by Johnykutty on 3/19/18.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 extension CGSize {
   func scaled(to factor: CGFloat) -> CGSize {
@@ -20,34 +20,46 @@ open class AssetWriter {
   let image: NSImage
   let imageName: String
   let size: CGSize
-  
-  public init(imagePath: String, size: CGSize) throws {
-    let imageURL = URL(fileURLWithPath: imagePath)
-    guard let image = NSImage(contentsOf: imageURL) else { throw Error.noImage(path: imagePath) }
-    
-    self.imageName = imageURL.lastPathComponent.replacingOccurrences(of: ".\(imageURL.pathExtension)", with: "")
+  let device: DeviceIdiom
+
+  public init(input: URLConvertible,
+              size: CGSize = .zero,
+              output: URLConvertible? = nil,
+              device: DeviceIdiom = .universal) throws {
+
+    let imageURL = input.asURL()
+    guard let image = NSImage(contentsOf: imageURL) else { throw Error.noImage(path: imageURL.lastPathComponent) }
+
     self.image = image
+    imageName = imageURL.lastPathComponent.replacingOccurrences(of: ".\(imageURL.pathExtension)", with: "")
     self.imageURL = imageURL
+
     self.size = size.equalTo(CGSize.zero) ? image.size : size
-    
-    self.assetURL = imageURL.deletingLastPathComponent().appendingPathComponent("\(imageName).imageset")
-    
+    self.device = device
+
+    let assetBase: URL
+    if let output = output {
+      assetBase = output.asURL()
+    } else {
+      assetBase = imageURL.deletingLastPathComponent()
+    }
+    assetURL = assetBase.appendingPathComponent("\(imageName).imageset")
   }
-  
+
   open func createAssets() throws {
-    let scales: [CGFloat] = [1, 2, 3]
-    
+    let scales = device.scales
+
     try FileManager.default.createDirectory(at: assetURL, withIntermediateDirectories: true, attributes: nil)
-    
+
     var images: [[String: String]] = []
-    
+
     for scale in scales {
       let imageJson = try processImage(scale: scale)
       images.append(imageJson)
     }
     try writeAssetContents(images, assetURL: assetURL)
   }
-  
+
   func processImage(scale: CGFloat) throws -> [String: String] {
     let scaledSize = size.scaled(to: scale)
     let newImage: NSImage
@@ -61,29 +73,31 @@ open class AssetWriter {
     guard let tiff = newImage.tiffRepresentation, let tiffData = NSBitmapImageRep(data: tiff) else {
       throw Error.error(reason: "Failed to get tiffRepresentation")
     }
-    guard let data = tiffData.representation(using: .png, properties: [:])else {
+    guard let data = tiffData.representation(using: .png, properties: [:]) else {
       throw Error.error(reason: "Failed to get png Representation")
     }
     let scaleString = "\(String(format: "%.0f", scale))x"
     let filename = "\(imageName)@\(scaleString).png"
     let fileURL = assetURL.appendingPathComponent(filename)
     try data.write(to: fileURL)
-    
-    let imageJson = ["idiom" : "universal",
-                     "filename" : filename,
-                     "scale" : scaleString]
+
+    let imageJson = [
+      "idiom": device.rawValue,
+      "filename": filename,
+      "scale": scaleString,
+    ]
     return imageJson
   }
-  
+
   func writeAssetContents(_ contents: [[String: String]], assetURL: URL) throws {
     let json: [String: Any] = [
-      "images" : contents,
-      "info" : [ "version" : 1, "author" : "xcode"]
+      "images": contents,
+      "info": ["version": 1, "author": "xcode"],
     ]
     let jsondata = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
     try jsondata.write(to: assetURL.appendingPathComponent("Contents.json"))
   }
-  
+
   func resize(image: NSImage, size: CGSize) -> NSImage {
     let newImage = NSImage(size: size)
     let sourceRect = CGRect(origin: CGPoint.zero, size: image.size)

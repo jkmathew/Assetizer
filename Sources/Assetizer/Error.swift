@@ -6,12 +6,12 @@
 //
 
 import Foundation
-public enum Error : Swift.Error, CustomStringConvertible {
+public enum Error: Swift.Error, CustomStringConvertible {
   case invalid(argument: String)
   case noImage(path: String)
   case error(reason: String)
-  
-  public var description:String {
+
+  public var description: String {
     switch self {
     case .invalid(let argument):
       return "Value for `\(argument)` in invalid"

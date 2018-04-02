@@ -8,12 +8,12 @@ let package = Package(
   products: [
     .library(name: "Assetizer", targets: ["Assetizer"]),
     .executable(name: "Run", targets: ["Run"]),
-    ],
+  ],
   dependencies: [
     .package(url: "https://github.com/kylef/Commander.git", .upToNextMajor(from: "0.8.0")),
-    ],
+  ],
   targets: [
     .target(name: "Assetizer", dependencies: []),
     .target(name: "Run", dependencies: ["Assetizer", "Commander"]),
-    ]
+  ]
 )
