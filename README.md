@@ -1,6 +1,6 @@
 # Assetizer
 
-Adding images to iOS/macOS project is not straight forward. You should add `1x` and/or ` 2x`  and/or ` 3x`  based on the screen size/ device. Your designer may give you the required  `1x`, ` 2x`, ` 3x` files. But what to do if they provide only one size or you downloading it from [here] (https://materialdesignicons.com). You should resize it with preview and rename, then add to assetcatalog. If you are continuosly adding/ changing images (especially during initial development stage), doing all these repeated tasks may become boring. `Assetizer` will help you to do this tasks with a single line command.
+Adding images to iOS/macOS project is not straight forward. You should add `1x` and/or ` 2x`  and/or ` 3x`  based on the screen size/ device. Your designer may give you the required  `1x`, ` 2x`, ` 3x` files. But what to do if they provide only one size or you downloading it from [here](https://materialdesignicons.com). You should resize it with preview and rename, then add to assetcatalog. If you are continuosly adding/ changing images (especially during initial development stage), doing all these repeated tasks may become boring. `Assetizer` will help you to do this tasks with a single line command.
 
 ## Installation
 
@@ -9,6 +9,11 @@ Adding images to iOS/macOS project is not straight forward. You should add `1x` 
 $ git clone https://github.com/jkmathew/Assetizer.git
 $ cd Assetizer
 $ make
+```
+
+### With [Mint](https://github.com/yonaskolb/mint)
+```shell
+$ mint install jkmathew/Assetizer assetize
 ```
 
 ### With SPM
@@ -31,7 +36,7 @@ Additionaly you can pass following options
 `--output`  - Output path, where you want to create the imageset.
   If you are working on a project continuously, you can set default output directory by entering,
 ```shell
-defaults write me.jkmathew.assetizer outputPath /path/to/images.xcassets
+$ defaults write me.jkmathew.assetizer outputPath /path/to/images.xcassets
 ```
   if `--output` option not passed and no default directory set, will create imageset in the input directory.
   
@@ -46,9 +51,9 @@ try writer.createAssets()
 
 ### TODO
 - [x] Distribute as a package to use in SPM projects.
-- [ ] Accept different device idioms.
+- [x] Accept different device idioms.
 - [ ] Create app icons.
-- [ ] Specify o/p path.
+- [x] Specify o/p path.
 - [ ] Ditribute through home brew.
 - [ ] Support for linux.
 
