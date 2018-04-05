@@ -65,10 +65,8 @@ open class AssetWriter {
     let newImage: NSImage
     if scaledSize.equalTo(image.size) {
       newImage = image
-//      print("\(scaledSize) not resizing")
     } else {
       newImage = resize(image: image, size: scaledSize)
-//      print("\(scaledSize)  resizing")
     }
     guard let tiff = newImage.tiffRepresentation, let tiffData = NSBitmapImageRep(data: tiff) else {
       throw Error.error(reason: "Failed to get tiffRepresentation")
