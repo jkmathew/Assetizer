@@ -15,5 +15,8 @@ let package = Package(
   targets: [
     .target(name: "Assetizer", dependencies: []),
     .target(name: "assetize", dependencies: ["Assetizer", "Commander"]),
+    .testTarget(
+      name: "AssetizerTests",
+      dependencies: ["Assetizer"]),
   ]
 )

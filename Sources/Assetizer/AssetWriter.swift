@@ -58,6 +58,7 @@ open class AssetWriter {
       images.append(imageJson)
     }
     try writeAssetContents(images, assetURL: assetURL)
+    print("\u{001B}[0;3Assets created at: \(assetURL)")
   }
 
   func processImage(scale: CGFloat) throws -> [String: String] {
